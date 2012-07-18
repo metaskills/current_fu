@@ -1,16 +1,26 @@
 module CurrentFu
   class Object
     
-    cattr_accessor  :instance
-    
     def initialize(current_owner)
       @current_owner = current_owner
+    end
+
+    class << self
+
+      def instance
+        Thread.current[:current_fu_instance]
+      end
+
+      def instance=(current_instance)
+        Thread.current[:current_fu_instance] = current_instance
+      end
+
     end
     
     def instance
       @current_owner
     end
-    
+
     def respond_to?(method)
       current_owner_respond_to?(method) || super
     end

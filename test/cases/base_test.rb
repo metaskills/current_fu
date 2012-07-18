@@ -59,6 +59,15 @@ class CurrentFu::BaseTest < CurrentFu::TestCase
       employee_instance.current.respond_to?(:user)
       employee_instance.current.user.must_equal user
     end
+
+    it 'is thread safe' do
+      bk1 = base_klass.new
+      bk2 = base_klass.new
+      t1 = Thread.new { CurrentFu::Object.instance = CurrentFu::Object.new(bk1) }.join
+      t2 = Thread.new { CurrentFu::Object.instance = CurrentFu::Object.new(bk2) }.join
+      t1[:current_fu_instance].instance.must_equal bk1
+      t2[:current_fu_instance].instance.must_equal bk2
+    end
     
   end
   

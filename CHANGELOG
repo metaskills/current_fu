@@ -1,4 +1,9 @@
 
+= 3.2.1
+
+* Relax gemspec so any Rails 3 would do.
+
+
 = 3.2.0
 
 * Initial release. Works with Rails ~> 3.2.0
